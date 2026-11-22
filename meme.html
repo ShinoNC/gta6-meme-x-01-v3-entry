@@ -2,56 +2,52 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Leonida Airlines boarding pass — GTA VI (v3)</title>
+<title>LEONIDA AIRLINES boarding pass — GTA VI meme, v3</title>
 <style>
+  /* Base reset: the canvas is exactly the 1024x1024 meme. */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 1024px; height: 1024px; overflow: hidden; }
   body {
-    font-family: "Noto Sans", "DejaVu Sans", sans-serif;
-    background: linear-gradient(180deg, #160829 0%, #3a0a4d 30%, #7a1160 55%, #c41c83 76%, #ff7a3d 100%);
     position: relative;
+    font-family: "Noto Sans", "DejaVu Sans", sans-serif;
+    background: linear-gradient(180deg,
+      #160829 0%, #3a0a4d 30%, #7a1160 55%, #c41c83 76%, #ff7a3d 100%);
   }
 
-  /* ---- the boarding pass ---- */
+  /* ===== The boarding pass card ===== */
   .pass {
-    position: absolute; left: 36px; top: 36px; width: 952px; height: 600px;
-    background: #fffdf7; border-radius: 26px;
+    position: absolute;
+    left: 36px; top: 36px;
+    width: 952px; height: 600px;
+    background: #fffdf7;
+    border-radius: 26px;
     box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
     overflow: hidden;
   }
 
-  /* header band */
+  /* Pink header band: airline name left, flight number right. */
   .header {
-    height: 88px; background: #c41c83;
-    display: flex; align-items: center; padding: 0 30px;
+    display: flex; align-items: center;
+    height: 88px; padding: 0 30px;
+    background: #c41c83;
   }
-  .header img.logo { width: 64px; height: 64px; }
-  .header .airline {
-    color: #fff; font-size: 40px; font-weight: 900; letter-spacing: 2px;
+  .header .logo { width: 64px; height: 64px; }
+  .airline {
     margin-left: 18px; white-space: nowrap;
+    color: #fff; font-size: 40px; font-weight: 900; letter-spacing: 2px;
   }
-  .header .flight {
-    margin-left: auto; text-align: right; color: #fff; white-space: nowrap;
-  }
-  .header .flight .bp { font-size: 24px; font-weight: 800; letter-spacing: 1px; }
-  .header .flight .no { font-size: 19px; font-weight: 700; color: #ffffff; margin-top: 2px; }
+  .flight { margin-left: auto; text-align: right; white-space: nowrap; color: #fff; }
+  .flight .bp { font-size: 24px; font-weight: 800; letter-spacing: 1px; }
+  .flight .no { margin-top: 2px; font-size: 19px; font-weight: 700; }
 
-  /* route row */
-  .route {
-    display: flex; align-items: flex-start;
-    padding: 14px 40px 0 40px;
-  }
+  /* Route row: LS on the left, VC on the right, dashed path between. */
+  .route { display: flex; align-items: flex-start; padding: 14px 40px 0 40px; }
   .city { width: 280px; }
   .city.right { text-align: right; }
-  .city .code {
-    font-size: 84px; font-weight: 900; line-height: 1; color: #17122b;
-    letter-spacing: 1px;
-  }
-  .city .name { font-size: 28px; font-weight: 800; color: #17122b; margin-top: 4px; }
-  .city .date { font-size: 22px; font-weight: 700; color: #6b665c; margin-top: 4px; }
-  .flightpath {
-    flex: 1; position: relative; height: 110px; margin: 0 10px;
-  }
+  .city .code { font-size: 84px; font-weight: 900; line-height: 1; letter-spacing: 1px; color: #17122b; }
+  .city .name { margin-top: 4px; font-size: 28px; font-weight: 800; color: #17122b; }
+  .city .date { margin-top: 4px; font-size: 22px; font-weight: 700; color: #6b665c; }
+  .flightpath { flex: 1; position: relative; height: 110px; margin: 0 10px; }
   .flightpath .dash {
     position: absolute; left: 0; right: 0; top: 50px;
     border-top: 4px dashed #b9b2a4;
@@ -62,75 +58,59 @@
     font-size: 88px; line-height: 1; color: #17122b;
   }
 
-  /* ---- the GIANT stamp: the punchline, stamped ON the pass ---- */
+  /* ===== The punchline: a giant red stamp across the pass ===== */
   .stamp {
-    position: absolute; left: 50%; top: 288px; transform: translateX(-50%) rotate(-4deg);
+    position: absolute; z-index: 5;
+    left: 50%; top: 288px; transform: translateX(-50%) rotate(-4deg);
+    padding: 10px 36px;
     border: 9px solid #d21f2b; border-radius: 14px;
-    color: #d21f2b; font-size: 66px; font-weight: 900; letter-spacing: 3px;
-    padding: 10px 36px; opacity: 0.96; white-space: nowrap; z-index: 5;
     background: rgba(255, 253, 247, 0.55);
+    color: #d21f2b; font-size: 66px; font-weight: 900; letter-spacing: 3px;
+    white-space: nowrap; opacity: 0.96;
   }
 
-  .divider {
-    margin: 165px 40px 0 40px; border-top: 3px dashed #d8d2c4;
-  }
+  .divider { margin: 165px 40px 0 40px; border-top: 3px dashed #d8d2c4; }
 
-  /* ---- 4 big jokes, one row ---- */
-  .jokes {
-    display: flex; justify-content: space-between;
-    padding: 22px 40px 0 40px;
-  }
+  /* ===== Four big jokes, one row ===== */
+  .jokes { display: flex; justify-content: space-between; padding: 22px 40px 0 40px; }
   .joke { text-align: left; }
-  .joke .label {
-    font-size: 21px; font-weight: 800; letter-spacing: 2px; color: #6b665c;
-  }
-  .joke .value {
-    font-size: 46px; font-weight: 900; color: #17122b; margin-top: 4px;
-    white-space: nowrap;
-  }
+  .joke .label { font-size: 21px; font-weight: 800; letter-spacing: 2px; color: #6b665c; }
+  .joke .value { margin-top: 4px; font-size: 46px; font-weight: 900; color: #17122b; white-space: nowrap; }
 
-  /* barcode row */
-  .barcode-row {
-    display: flex; justify-content: flex-end; align-items: flex-start;
-    padding: 18px 40px 0 40px;
-  }
+  /* Decorative barcode, bottom right of the pass. */
+  .barcode-row { display: flex; justify-content: flex-end; padding: 18px 40px 0 40px; }
   .barcode svg { display: block; }
 
-  /* ---- payment band ---- */
+  /* ===== Payment band: ghost + "paid by my AI agent" ===== */
   .payband {
-    position: absolute; left: 36px; top: 652px; width: 952px; height: 312px;
+    position: absolute; left: 36px; top: 652px;
+    width: 952px; height: 312px;
     background: #17122b; border-radius: 26px;
     box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
   }
   .payband .ghost {
-    position: absolute; left: 26px; top: -38px; width: 350px; height: 350px;
-    z-index: 3;
+    position: absolute; z-index: 3;
+    left: 26px; top: -38px; width: 350px; height: 350px;
   }
   .payband .paytext {
-    position: absolute; left: 414px; top: 0; width: 508px; height: 312px;
+    position: absolute; left: 414px; top: 0;
+    width: 508px; height: 312px;
     display: flex; flex-direction: column; justify-content: center;
   }
-  .payband .paid {
-    color: #fff; font-size: 40px; font-weight: 900; line-height: 1.05;
-    white-space: nowrap;
-  }
-  .payband .sub {
-    color: #fff; font-size: 26px; font-weight: 600; margin-top: 10px;
-    white-space: nowrap;
-  }
+  .payband .paid { font-size: 40px; font-weight: 900; line-height: 1.05; color: #fff; white-space: nowrap; }
+  .payband .sub { margin-top: 10px; font-size: 26px; font-weight: 600; color: #fff; white-space: nowrap; }
   .payband .pill {
-    align-self: flex-start; background: #fff; border-radius: 999px;
-    padding: 8px 28px; margin-top: 14px;
+    align-self: flex-start; margin-top: 14px; padding: 8px 28px;
+    background: #fff; border-radius: 999px;
     color: #c41c83; font-size: 34px; font-weight: 900; letter-spacing: 0.5px;
   }
 
-  .footer {
-    position: absolute; left: 0; right: 0; top: 974px; text-align: center;
-  }
+  /* Footer tagline, centred under the payment band. */
+  .footer { position: absolute; left: 0; right: 0; top: 974px; text-align: center; }
   .footer span {
-    display: inline-block; background: #17122b; border-radius: 999px;
-    padding: 7px 24px;
-    color: #ffffff; font-size: 22px; font-weight: 700; font-style: italic;
+    display: inline-block; padding: 7px 24px;
+    background: #17122b; border-radius: 999px;
+    color: #fff; font-size: 22px; font-weight: 700; font-style: italic;
   }
 </style>
 </head>
@@ -193,21 +173,22 @@
   <div class="footer"><span>Please keep this pass. The 13-year wait is non-refundable.</span></div>
 
 <script>
-  // Decorative barcode: fixed pseudo-random bar widths (seeded, deterministic).
+  // Decorative barcode: a fixed sequence of bar widths, so the render is
+  // deterministic. Bars are drawn for even indices; odd indices are gaps.
   (function () {
     var svg = document.getElementById('barcode');
     var widths = [3,1,2,1,1,4,2,1,3,1,1,2,5,1,2,1,1,3,1,2,1,4,1,1,2,3,1,1,2,1,5,2,1,1,3,1,2,1,1,4,2,1,1,3,2,1,1,2,4,1];
-    var x = 0;
     var NS = 'http://www.w3.org/2000/svg';
+    var x = 0;
     for (var i = 0; i < widths.length; i++) {
       if (i % 2 === 0) {
-        var r = document.createElementNS(NS, 'rect');
-        r.setAttribute('x', x);
-        r.setAttribute('y', 0);
-        r.setAttribute('width', widths[i] * 2);
-        r.setAttribute('height', 30);
-        r.setAttribute('fill', '#17122b');
-        svg.appendChild(r);
+        var bar = document.createElementNS(NS, 'rect');
+        bar.setAttribute('x', x);
+        bar.setAttribute('y', 0);
+        bar.setAttribute('width', widths[i] * 2);
+        bar.setAttribute('height', 30);
+        bar.setAttribute('fill', '#17122b');
+        svg.appendChild(bar);
       }
       x += widths[i] * 2 + 3;
       if (x > 410) break;

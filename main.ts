@@ -1,38 +1,41 @@
-// gta6-meme-x-01 entry, v3 (boarding pass meme, punchline-first redesign).
-// Node 22, standard library only.
+// gta6-meme-x-01 entry, v3 — the boarding-pass meme, punchline-first.
+// Runs on Node 22 with the standard library only.
 //
-// The entry is the X post itself: the house reads the post named in POST.json
-// from X and hands its first picture and its text to the judge. All this
-// program does is deliver POST.json to the output directory, where the gate
-// reads it.
+// The entry is the X post itself: the house fetches the post named in
+// POST.json and hands its first picture plus its text to the judge. This
+// program's only job is to deliver POST.json into the output directory,
+// where the gate picks it up.
 //
-// Local check:
+// Try it locally:
 //   mkdir -p out && MAKEFUN_BOT_DIR=. MAKEFUN_OUTPUT_DIR=out node main.ts
 
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const repoDir = process.env.MAKEFUN_BOT_DIR ?? '/bot';
-const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+const BOT_DIR = process.env.MAKEFUN_BOT_DIR ?? '/bot';
+const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
-const sourcePath = join(repoDir, 'POST.json');
-const targetPath = join(outDir, 'POST.json');
-
-const raw = readFileSync(sourcePath, 'utf8');
-const parsed = JSON.parse(raw) as { url?: unknown };
-if (typeof parsed.url !== 'string' || !parsed.url.startsWith('https://x.com/')) {
-  console.error('POST.json does not name an X post URL; refusing to publish it.');
+function fail(message: string): never {
+  console.error(message);
   process.exit(1);
 }
 
-mkdirSync(outDir, { recursive: true });
-writeFileSync(targetPath, raw);
+const source = join(BOT_DIR, 'POST.json');
+const destination = join(OUTPUT_DIR, 'POST.json');
 
-// Read the published copy back: the gate reads this file, so confirm the
-// bytes that landed are exactly the bytes we meant to publish.
-const published = readFileSync(targetPath, 'utf8');
-if (published !== raw) {
-  console.error('Published POST.json does not match the source; aborting.');
-  process.exit(1);
+const bytes = readFileSync(source, 'utf8');
+const post = JSON.parse(bytes) as { url?: unknown };
+if (typeof post.url !== 'string' || !post.url.startsWith('https://x.com/')) {
+  fail('POST.json does not name an X post URL; refusing to publish it.');
 }
-console.log(`Published ${parsed.url} to ${targetPath}`);
+
+mkdirSync(OUTPUT_DIR, { recursive: true });
+writeFileSync(destination, bytes);
+
+// The gate reads the published copy, so read it back and confirm the bytes
+// that landed are exactly the bytes we meant to publish.
+if (readFileSync(destination, 'utf8') !== bytes) {
+  fail('Published POST.json does not match the source; aborting.');
+}
+
+console.log(`Published ${post.url} to ${destination}`);
